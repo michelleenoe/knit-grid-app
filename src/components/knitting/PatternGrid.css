@@ -1,0 +1,35 @@
+.pattern-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.pattern-grid__row {
+  display: grid;
+  grid-template-columns: 36px repeat(auto-fit, minmax(24px, 1fr));
+  gap: 6px;
+  align-items: center;
+  padding: 6px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pattern-grid__row--active {
+  background: rgba(53, 95, 190, 0.12);
+  box-shadow: inset 0 0 0 2px rgba(53, 95, 190, 0.22);
+}
+
+.pattern-grid__row-number {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  text-align: center;
+  font-weight: 600;
+}
+
+.pattern-grid__cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  border: 1px solid rgba(33, 23, 20, 0.08);
+  min-width: 0;
+  background: #f0e9df;
+}

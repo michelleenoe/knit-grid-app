@@ -1,15 +1,35 @@
 :root {
-  color-scheme: light;
-  --color-bg: #f2f0ec;
-  --color-surface: #ffffff;
-  --color-border: #e5dfd5;
-  --color-text: #1f1f1f;
-  --color-muted: #6b6b6b;
-  --color-accent: #de6b3e;
-  --color-accent-soft: rgba(222, 107, 62, 0.18);
-  --radius-lg: 1rem;
-  --radius-md: 0.75rem;
-  --shadow-soft: 0 10px 30px rgba(31, 31, 31, 0.12);
-  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --spacing-page: 1.5rem;
+  --color-bg: #f5f1ea;
+  --color-surface: #f0e9df;
+  --color-card: #f7f3ec;
+  --color-text: #211714;
+  --color-muted: #6f625d;
+
+  --color-red: #df4b3f;
+  --color-blue: #355fbe;
+  --color-beige: #e5cda9;
+  --color-brown: #3a2320;
+  --color-mustard: #c89b3c;
+  --color-peach: #efc7ba;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 36px;
+
+  --shadow-soft: 0 8px 24px rgba(33, 23, 20, 0.08);
+
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+
+  --max-width-mobile: 430px;
 }

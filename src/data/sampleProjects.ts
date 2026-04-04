@@ -1,0 +1,70 @@
+import type { Project } from "../types/project";
+
+const makeGrid = (rows: number, columns: number, fill = "") =>
+  Array.from({ length: rows }, () => Array.from({ length: columns }, () => fill));
+
+export const sampleProjects: Project[] = [
+  {
+    id: "1",
+    name: "Stripe Study",
+    status: "in-progress",
+    currentRow: 12,
+    totalRows: 32,
+    knitMode: "round",
+    palette: ["#EFC7BA", "#DF4B3F", "#355FBE", "#E5CDA9", "#3A2320"],
+    pattern: {
+      rows: 20,
+      columns: 9,
+      cells: makeGrid(20, 9, ""),
+    },
+    yarn: "Merino Wool, 4 ply",
+    needleSize: "3.5 mm",
+    notes: "Love how the colors play together. Keep the tension loose.",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    rowsCompletedToday: 12,
+    totalRowsCompleted: 48,
+  },
+  {
+    id: "2",
+    name: "Cozy Blanket",
+    status: "not-started",
+    currentRow: 1,
+    totalRows: 48,
+    knitMode: "flat",
+    palette: ["#EFC7BA", "#355FBE", "#E5CDA9", "#3A2320"],
+    pattern: {
+      rows: 24,
+      columns: 12,
+      cells: makeGrid(24, 12, ""),
+    },
+    yarn: "Cotton Blend",
+    needleSize: "5 mm",
+    notes: "",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    rowsCompletedToday: 0,
+    totalRowsCompleted: 0,
+  },
+  {
+    id: "3",
+    name: "Geometric Scarf",
+    status: "finished",
+    currentRow: 90,
+    totalRows: 90,
+    knitMode: "flat",
+    palette: ["#E5CDA9", "#3A2320", "#355FBE", "#EFC7BA", "#DF4B3F"],
+    pattern: {
+      rows: 18,
+      columns: 10,
+      cells: makeGrid(18, 10, ""),
+    },
+    yarn: "Alpaca Blend",
+    needleSize: "4 mm",
+    notes: "Finished version of the geometric scarf study.",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    rowsCompletedToday: 0,
+    totalRowsCompleted: 90,
+  },
+];

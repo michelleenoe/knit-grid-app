@@ -1,0 +1,58 @@
+.project-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.65 / 1;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.shape {
+  position: absolute;
+  filter: drop-shadow(0 14px 20px rgba(33, 23, 20, 0.15));
+  transition: transform 0.3s ease;
+}
+
+.project-preview:hover .shape {
+  transform: scale(1.02);
+}
+
+.shape--quarter {
+  width: 46%;
+  height: 58%;
+  border-bottom-right-radius: 999px;
+  top: -6%;
+  left: -4%;
+}
+
+.shape--arch {
+  width: 30%;
+  height: 74%;
+  border-radius: 999px 999px 0 0;
+  right: 10%;
+  top: -4%;
+}
+
+.shape--blob {
+  width: 36%;
+  height: 44%;
+  border-radius: 38% 62% 55% 45% / 41% 38% 62% 59%;
+  bottom: -6%;
+  left: -2%;
+}
+
+.shape--circle {
+  width: 28%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  top: 12%;
+  right: 6%;
+}
+
+.shape--semi {
+  width: 42%;
+  height: 70%;
+  border-top-left-radius: 999px;
+  bottom: 0;
+  right: -4%;
+}

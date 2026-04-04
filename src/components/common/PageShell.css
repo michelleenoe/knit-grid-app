@@ -1,0 +1,12 @@
+.page-shell {
+  width: 100%;
+  max-width: var(--max-width-mobile);
+  min-height: 100vh;
+  position: relative;
+}
+
+.page-shell__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
