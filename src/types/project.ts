@@ -1,3 +1,5 @@
+import type { Language } from "../localization/Localization";
+
 export type CellColor = string;
 
 export type PatternGrid = {
@@ -33,4 +35,5 @@ export type AppSettings = {
   defaultColumns: number;
   showRowNumbers: boolean;
   highlightActiveRow: boolean;
+  language: Language;
 };

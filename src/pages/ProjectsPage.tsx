@@ -5,19 +5,20 @@ import { EmptyState } from "../components/common/EmptyState";
 import { ProjectCard } from "../components/projects/ProjectCard";
 import { useAppStore } from "../app/store";
 import { useNavigate } from "react-router-dom";
+import { useLocalization } from "../localization/Localization";
 
 type FilterKey = "all" | "in-progress" | "finished";
 
-const filterOptions: { key: FilterKey; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "in-progress", label: "In Progress" },
-  { key: "finished", label: "Finished" },
-];
-
 export function ProjectsPage() {
+  const localization = useLocalization();
   const projects = useAppStore((state) => state.projects);
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
   const navigate = useNavigate();
+  const filterOptions: { key: FilterKey; label: string }[] = [
+    { key: "all", label: localization.projects.filters.all },
+    { key: "in-progress", label: localization.projects.filters.inProgress },
+    { key: "finished", label: localization.projects.filters.finished },
+  ];
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "all") return projects;
@@ -27,16 +28,16 @@ export function ProjectsPage() {
   return (
     <PageShell>
       <SectionTitle
-        title="Projects"
-        subtitle="Track rows, edit patterns, and keep your knitting projects in one place."
+        title={localization.projects.title}
+        subtitle={localization.projects.subtitle}
         action={
           <button
             type="button"
-            aria-label="Create new project"
+            aria-label={localization.buttons.createProject}
             className="btn btn--primary"
             onClick={() => navigate("/new")}
           >
-            + New project
+            + {localization.projects.newProject}
           </button>
         }
       />
@@ -74,15 +75,15 @@ export function ProjectsPage() {
         </div>
       ) : (
         <EmptyState
-          title="No projects yet"
-          description="Create your first knitting project to keep track of rows and notes."
+          title={localization.projects.empty.title}
+          description={localization.projects.empty.description}
           action={
             <button
               type="button"
               className="btn btn--primary"
               onClick={() => navigate("/new")}
             >
-              Start a project
+              {localization.projects.empty.action}
             </button>
           }
         />

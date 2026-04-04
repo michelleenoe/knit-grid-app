@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Project } from "../../types/project";
+import { useLocalization } from "../../localization/Localization";
 import { ProjectPreview } from "./ProjectPreview";
 import "./ProjectCard.css";
 
@@ -7,13 +8,9 @@ type ProjectCardProps = {
   project: Project;
 };
 
-const statusLabelMap: Record<Project["status"], string> = {
-  "not-started": "Not started",
-  "in-progress": "In progress",
-  finished: "Finished",
-};
-
 export function ProjectCard({ project }: ProjectCardProps) {
+  const localization = useLocalization();
+  const statusLabel = localization.statuses[project.status];
   return (
     <Link to={`/project/${project.id}`} className="project-card">
       <ProjectPreview project={project} />
@@ -25,8 +22,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <div className="project-card__meta">
-          <span>{statusLabelMap[project.status]}</span>
-          <span>Row {project.currentRow}</span>
+          <span>{statusLabel}</span>
+          <span>{localization.labels.rowNumber(project.currentRow)}</span>
         </div>
       </div>
     </Link>

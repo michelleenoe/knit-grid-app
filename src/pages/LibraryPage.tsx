@@ -5,19 +5,20 @@ import { EmptyState } from "../components/common/EmptyState";
 import { LibraryCard } from "../components/library/LibraryCard";
 import { libraryItems } from "../data/library";
 import type { LibraryCategory } from "../types/library";
+import { useLocalization } from "../localization/Localization";
 
 type LibraryFilter = "all" | LibraryCategory;
 
-const filterOptions: { key: LibraryFilter; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "stitches", label: "Stitches" },
-  { key: "techniques", label: "Techniques" },
-  { key: "patterns", label: "Patterns" },
-  { key: "saved", label: "Saved" },
-];
-
 export function LibraryPage() {
+  const localization = useLocalization();
   const [activeFilter, setActiveFilter] = useState<LibraryFilter>("all");
+  const filterOptions: { key: LibraryFilter; label: string }[] = [
+    { key: "all", label: localization.library.filters.all },
+    { key: "stitches", label: localization.library.filters.stitches },
+    { key: "techniques", label: localization.library.filters.techniques },
+    { key: "patterns", label: localization.library.filters.patterns },
+    { key: "saved", label: localization.library.filters.saved },
+  ];
 
   const filteredItems = useMemo(() => {
     if (activeFilter === "all") return libraryItems;
@@ -27,8 +28,8 @@ export function LibraryPage() {
   return (
     <PageShell>
       <SectionTitle
-        title="Library"
-        subtitle="Keep stitches, techniques and visual ideas close while you work."
+        title={localization.library.title}
+        subtitle={localization.library.subtitle}
       />
 
       <div className="chip-group">
@@ -63,8 +64,8 @@ export function LibraryPage() {
         </div>
       ) : (
         <EmptyState
-          title="No entries found"
-          description="Try another filter or add something new to your library."
+          title={localization.library.empty.title}
+          description={localization.library.empty.description}
         />
       )}
     </PageShell>

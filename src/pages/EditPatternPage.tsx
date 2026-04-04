@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageShell } from "../components/common/PageShell";
 import { EmptyState } from "../components/common/EmptyState";
+import { useLocalization } from "../localization/Localization";
 import { useAppStore } from "../app/store";
 import { paintPatternCell, resizePatternGrid } from "../utils/pattern";
 
@@ -10,6 +11,7 @@ type EditorTool = "draw" | "erase";
 export function EditPatternPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const localization = useLocalization();
 
   const project = useAppStore((state) =>
     id ? state.getProjectById(id) : undefined
@@ -42,15 +44,15 @@ export function EditPatternPage() {
             onClick={() => navigate("/")}
             className="btn btn--ghost"
           >
-            ← Back
+            ← {localization.buttons.back}
           </button>
 
           <EmptyState
-            title="Project not found"
-            description="We could not load the pattern editor for this project."
+            title={localization.patternEditor.missingTitle}
+            description={localization.patternEditor.missingDescription}
           />
         </div>
-    </PageShell>
+      </PageShell>
     );
   }
 
@@ -88,14 +90,14 @@ export function EditPatternPage() {
             onClick={() => navigate(`/project/${activeProject.id}`)}
             className="btn btn--ghost"
           >
-            ← Back
+            ← {localization.buttons.back}
           </button>
           <button
             type="button"
             onClick={() => navigate(`/project/${activeProject.id}/knit`)}
             className="btn btn--secondary"
           >
-            Open knit mode
+            {localization.buttons.openKnitMode}
           </button>
         </div>
 
@@ -103,30 +105,40 @@ export function EditPatternPage() {
           <div className="panel__header">
             <div>
               <p className="form-field__label">{activeProject.name}</p>
-              <h1 className="panel__title">Edit pattern</h1>
+              <h1 className="panel__title">
+                {localization.patternEditor.editTitle}
+              </h1>
               <p className="form-field__hint">
-                Build your pattern by painting cells. Keep it simple and graphic.
+                {localization.patternEditor.editHint}
               </p>
             </div>
             <div className="panel__meta">
-              <span>{activeProject.pattern.rows} rows</span>
-              <span>{activeProject.pattern.columns} columns</span>
+              <span>
+                {activeProject.pattern.rows}{" "}
+                {localization.patternEditor.rows.toLowerCase()}
+              </span>
+              <span>
+                {activeProject.pattern.columns}{" "}
+                {localization.patternEditor.columns.toLowerCase()}
+              </span>
             </div>
           </div>
         </div>
 
         <div className="panel">
           <div className="panel__header">
-            <span className="panel__title">Tools</span>
+            <span className="panel__title">
+              {localization.patternEditor.toolsTitle}
+            </span>
           </div>
           <div className="page-actions">
             <ToolButton
-              label="Draw"
+              label={localization.patternEditor.toolLabels.draw}
               active={activeTool === "draw"}
               onClick={() => setActiveTool("draw")}
             />
             <ToolButton
-              label="Erase"
+              label={localization.patternEditor.toolLabels.erase}
               active={activeTool === "erase"}
               onClick={() => setActiveTool("erase")}
             />
@@ -135,7 +147,9 @@ export function EditPatternPage() {
 
         <div className="panel">
           <div className="panel__header">
-            <span className="panel__title">Palette</span>
+            <span className="panel__title">
+              {localization.patternEditor.paletteTitle}
+            </span>
           </div>
           <div className="page-actions">
             {safePalette.map((color) => {
@@ -145,7 +159,7 @@ export function EditPatternPage() {
                 <button
                   key={color}
                   type="button"
-                  aria-label={`Select color ${color}`}
+                  aria-label={`${localization.patternEditor.selectColor} ${color}`}
                   onClick={() => {
                     setActiveTool("draw");
                     setActiveColor(color);
@@ -162,12 +176,16 @@ export function EditPatternPage() {
 
         <div className="panel">
           <div className="panel__header">
-            <span className="panel__title">Resize grid</span>
+            <span className="panel__title">
+              {localization.patternEditor.resizeTitle}
+            </span>
           </div>
 
           <div className="grid-two">
             <label className="form-field">
-              <span className="form-field__label">Rows</span>
+              <span className="form-field__label">
+                {localization.patternEditor.rows}
+              </span>
               <input
                 type="number"
                 min={1}
@@ -179,7 +197,9 @@ export function EditPatternPage() {
             </label>
 
             <label className="form-field">
-              <span className="form-field__label">Columns</span>
+              <span className="form-field__label">
+                {localization.patternEditor.columns}
+              </span>
               <input
                 type="number"
                 min={1}
@@ -196,13 +216,15 @@ export function EditPatternPage() {
             onClick={handleResize}
             className="btn btn--primary"
           >
-            Apply size
+            {localization.buttons.applySize}
           </button>
         </div>
 
         <div className="panel">
           <div className="panel__header">
-            <span className="panel__title">Pattern grid</span>
+            <span className="panel__title">
+              {localization.patternEditor.gridTitle}
+            </span>
           </div>
 
           <div

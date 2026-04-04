@@ -55,6 +55,7 @@ const defaultSettings: AppSettings = {
   defaultColumns: 20,
   showRowNumbers: true,
   highlightActiveRow: true,
+  language: "en",
 };
 
 export const useAppStore = create<AppState>()(

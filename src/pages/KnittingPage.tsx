@@ -2,10 +2,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PageShell } from "../components/common/PageShell";
 import { PatternGrid } from "../components/knitting/PatternGrid";
 import { useAppStore } from "../app/store";
+import { useLocalization } from "../localization/Localization";
 
 export function KnittingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const localization = useLocalization();
 
   const project = useAppStore((state) =>
     id ? state.getProjectById(id) : undefined
@@ -22,13 +24,15 @@ export function KnittingPage() {
             onClick={() => navigate("/")}
             className="btn btn--ghost"
           >
-            ← Back
+            ← {localization.buttons.back}
           </button>
 
           <div className="panel">
-            <span className="panel__title">Project not found</span>
+            <span className="panel__title">
+              {localization.knitting.missingTitle}
+            </span>
             <p className="form-field__hint">
-              We could not load this knitting project at the moment.
+              {localization.knitting.missingDescription}
             </p>
           </div>
         </div>
@@ -45,10 +49,12 @@ export function KnittingPage() {
             onClick={() => navigate(`/project/${project.id}`)}
             className="btn btn--ghost"
           >
-            ← Back
+            ← {localization.buttons.back}
           </button>
           <span className="status-pill">
-            {project.knitMode === "round" ? "Round mode" : "Flat mode"}
+            {project.knitMode === "round"
+              ? localization.knitting.modeLabels.round
+              : localization.knitting.modeLabels.flat}
           </span>
         </div>
 
@@ -57,15 +63,23 @@ export function KnittingPage() {
             <p className="form-field__label" style={{ fontWeight: 600 }}>
               {project.name}
             </p>
-            <h1 className="knitting-row-title">Row {project.currentRow}</h1>
+            <h1 className="knitting-row-title">
+              {localization.labels.rowNumber(project.currentRow)}
+            </h1>
             <p className="form-field__hint">
-              Follow your pattern row by row. The active row is highlighted below.
+              {localization.knitting.followHint}
             </p>
           </div>
 
           <div className="stat-grid">
-            <StatCard label="Current" value={`Row ${project.currentRow}`} />
-            <StatCard label="Total" value={`${project.totalRows} rows`} />
+            <StatCard
+              label={localization.knitting.stats.current}
+              value={localization.labels.rowNumber(project.currentRow)}
+            />
+            <StatCard
+              label={localization.knitting.stats.total}
+              value={localization.labels.rowsCount(project.totalRows)}
+            />
           </div>
         </div>
 
@@ -92,7 +106,7 @@ export function KnittingPage() {
                   : "var(--color-text)",
             }}
           >
-            Previous
+            {localization.knitting.buttons.previous}
           </button>
 
           <button
@@ -108,7 +122,7 @@ export function KnittingPage() {
               color: project.currentRow >= project.totalRows ? "white" : "white",
             }}
           >
-            Next row
+            {localization.knitting.buttons.next}
           </button>
         </div>
       </div>

@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { PageShell } from "../components/common/PageShell";
 import { SectionTitle } from "../components/common/SectionTitle";
 import { useAppStore } from "../app/store";
+import { useLocalization } from "../localization/Localization";
 
 export function NewProjectPage() {
   const navigate = useNavigate();
   const createProject = useAppStore((state) => state.createProject);
+  const localization = useLocalization();
 
   const [name, setName] = useState("");
   const [rows, setRows] = useState(20);
@@ -32,23 +34,23 @@ export function NewProjectPage() {
   return (
     <PageShell>
       <SectionTitle
-        title="Create project"
-        subtitle="Set up your rows, columns, and preferred knit mode before you begin."
+        title={localization.newProject.title}
+        subtitle={localization.newProject.subtitle}
       />
 
       <div className="panel">
         <form onSubmit={handleSubmit} className="form">
           <label className="form-field">
-            <span className="form-field__label">Project name</span>
+            <span className="form-field__label">
+              {localization.newProject.fields.name}
+            </span>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="My sweater"
               className="input"
             />
-            <span className="form-field__hint">
-              A descriptive name helps keep your projects organized.
-            </span>
+            <span className="form-field__hint">{localization.newProject.hint}</span>
           </label>
 
           <div
@@ -59,7 +61,9 @@ export function NewProjectPage() {
             }}
           >
             <label className="form-field">
-              <span className="form-field__label">Rows</span>
+              <span className="form-field__label">
+                {localization.newProject.fields.rows}
+              </span>
               <input
                 type="number"
                 min={1}
@@ -70,7 +74,9 @@ export function NewProjectPage() {
             </label>
 
             <label className="form-field">
-              <span className="form-field__label">Columns</span>
+              <span className="form-field__label">
+                {localization.newProject.fields.columns}
+              </span>
               <input
                 type="number"
                 min={1}
@@ -82,14 +88,20 @@ export function NewProjectPage() {
           </div>
 
           <label className="form-field">
-            <span className="form-field__label">Knit mode</span>
+            <span className="form-field__label">
+              {localization.newProject.fields.knitMode}
+            </span>
             <select
               value={knitMode}
               onChange={(e) => setKnitMode(e.target.value as "flat" | "round")}
               className="select"
             >
-              <option value="flat">Flat</option>
-              <option value="round">Round</option>
+              <option value="flat">
+                {localization.knitting.modeLabels.flat}
+              </option>
+              <option value="round">
+                {localization.knitting.modeLabels.round}
+              </option>
             </select>
           </label>
 
@@ -99,14 +111,14 @@ export function NewProjectPage() {
               className="btn btn--primary"
               disabled={!name.trim()}
             >
-              Create project
+              {localization.buttons.createProject}
             </button>
             <button
               type="button"
               className="btn btn--ghost"
               onClick={() => navigate("/")}
             >
-              Cancel
+              {localization.buttons.cancel}
             </button>
           </div>
         </form>

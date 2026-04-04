@@ -1,5 +1,6 @@
 import { PageShell } from "../components/common/PageShell";
 import { useAppStore } from "../app/store";
+import { useLocalization } from "../localization/Localization";
 import {
   getInProgressProjects,
   getMostAdvancedProject,
@@ -10,6 +11,7 @@ import {
 
 export function InsightsPage() {
   const projects = useAppStore((state) => state.projects);
+  const localization = useLocalization();
 
   const rowsToday = getRowsCompletedToday(projects);
   const totalRows = getTotalRowsCompleted(projects);
@@ -18,20 +20,20 @@ export function InsightsPage() {
   const weeklyActivity = getWeeklyActivityMock(rowsToday);
 
   const maxValue = Math.max(...weeklyActivity, 1);
-  const dayLabels = ["M", "T", "W", "T", "F", "S", "S"];
+  const dayLabels = localization.dayLabels;
 
   return (
     <PageShell>
       <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <p className="hero-card__label" style={{ fontWeight: 700 }}>
-            PROGRESS
+            {localization.insights.progressLabel}
           </p>
           <h1 className="hero-card__title" style={{ marginBottom: 0 }}>
-            Insights
+            {localization.insights.title}
           </h1>
           <p className="hero-card__subtitle">
-            A calm view of your knitting progress and current rhythm.
+            {localization.insights.subtitle}
           </p>
         </div>
 
@@ -63,23 +65,23 @@ export function InsightsPage() {
 
           <div className="hero-card__content">
             <p className="hero-card__label" style={{ fontWeight: 700 }}>
-              Today
+              {localization.insights.heroLabel}
             </p>
             <h2 className="hero-card__title">{rowsToday}</h2>
             <p className="hero-card__subtitle">
-              Rows completed today across all your active knitting projects.
+              {localization.insights.heroDescription}
             </p>
           </div>
         </div>
 
         <div className="stat-grid">
           <InsightStatCard
-            label="Total rows"
+            label={localization.insights.statLabels.totalRows}
             value={`${totalRows}`}
             accent="var(--color-beige)"
           />
           <InsightStatCard
-            label="In progress"
+            label={localization.insights.statLabels.inProgress}
             value={`${activeProjects}`}
             accent="var(--color-peach)"
           />
@@ -87,10 +89,12 @@ export function InsightsPage() {
 
         <div className="panel--dark">
           <div className="panel__header">
-            <span className="panel__title">Weekly activity</span>
+            <span className="panel__title">
+              {localization.insights.weeklyTitle}
+            </span>
           </div>
           <p className="form-field__hint">
-            A simple look at your current knitting rhythm.
+            {localization.insights.weeklyHint}
           </p>
 
           <div className="weekly-chart">
@@ -132,10 +136,12 @@ export function InsightsPage() {
 
         <div className="panel--dark">
           <div className="panel__header">
-            <span className="panel__title">Most advanced project</span>
+            <span className="panel__title">
+              {localization.insights.mostAdvancedTitle}
+            </span>
           </div>
           <p className="form-field__hint">
-            The project currently furthest along in your collection.
+            {localization.insights.mostAdvancedHint}
           </p>
 
           {mostAdvancedProject ? (
@@ -206,12 +212,16 @@ export function InsightsPage() {
               </div>
 
               <p className="form-field__hint">
-                {mostAdvancedProject.currentRow} of{" "}
-                {mostAdvancedProject.totalRows} rows completed.
+                {localization.insights.rowsCompleted(
+                  mostAdvancedProject.currentRow,
+                  mostAdvancedProject.totalRows
+                )}
               </p>
             </div>
           ) : (
-            <p className="form-field__hint">No project data available yet.</p>
+            <p className="form-field__hint">
+              {localization.insights.noProjectData}
+            </p>
           )}
         </div>
       </div>

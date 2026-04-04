@@ -1,6 +1,8 @@
 import type { ChangeEvent } from "react";
 import { PageShell } from "../components/common/PageShell";
 import { SectionTitle } from "../components/common/SectionTitle";
+import { useLocalization } from "../localization/Localization";
+import type { Language } from "../localization/Localization";
 import { useAppStore } from "../app/store";
 
 export function SettingsPage() {
@@ -8,11 +10,11 @@ export function SettingsPage() {
   const updateSettings = useAppStore((state) => state.updateSettings);
   const resetProjects = useAppStore((state) => state.resetProjects);
   const projectsCount = useAppStore((state) => state.projects.length);
+  const localization = useLocalization();
+  const languages: Language[] = ["en", "da"];
 
   function handleResetProjects() {
-    const confirmed = window.confirm(
-      "Reset all projects back to the sample data? This will remove your current saved changes."
-    );
+    const confirmed = window.confirm(localization.confirmations.resetProjects);
 
     if (!confirmed) return;
 
@@ -22,18 +24,22 @@ export function SettingsPage() {
   return (
     <PageShell>
       <SectionTitle
-        title="Settings"
-        subtitle="Adjust how the app behaves and set your preferred defaults for new projects."
+        title={localization.settings.pageTitle}
+        subtitle={localization.settings.pageSubtitle}
       />
 
       <div className="panel">
         <div className="panel__header">
-          <span className="panel__title">New project defaults</span>
+          <span className="panel__title">
+            {localization.settings.projectDefaultsTitle}
+          </span>
         </div>
 
         <div className="grid-two">
           <label className="form-field">
-            <span className="form-field__label">Default knit mode</span>
+            <span className="form-field__label">
+              {localization.newProject.fields.knitMode}
+            </span>
             <select
               value={settings.defaultKnitMode}
               onChange={(event: ChangeEvent<HTMLSelectElement>) =>
@@ -43,13 +49,19 @@ export function SettingsPage() {
               }
               className="select"
             >
-              <option value="flat">Flat</option>
-              <option value="round">Round</option>
+              <option value="flat">
+                {localization.knitting.modeLabels.flat}
+              </option>
+              <option value="round">
+                {localization.knitting.modeLabels.round}
+              </option>
             </select>
           </label>
 
           <label className="form-field">
-            <span className="form-field__label">Default rows</span>
+            <span className="form-field__label">
+              {localization.newProject.fields.rows}
+            </span>
             <input
               type="number"
               min={1}
@@ -65,7 +77,9 @@ export function SettingsPage() {
           </label>
 
           <label className="form-field">
-            <span className="form-field__label">Default columns</span>
+            <span className="form-field__label">
+              {localization.newProject.fields.columns}
+            </span>
             <input
               type="number"
               min={1}
@@ -84,7 +98,9 @@ export function SettingsPage() {
 
       <div className="panel">
         <div className="panel__header">
-          <span className="panel__title">Display</span>
+          <span className="panel__title">
+            {localization.settings.displayTitle}
+          </span>
         </div>
         <div
           style={{
@@ -94,8 +110,10 @@ export function SettingsPage() {
           }}
         >
           <ToggleRow
-            title="Show row numbers"
-            description="Display row numbers next to the pattern grid."
+            title={localization.settings.toggles.showRowNumbers.title}
+            description={
+              localization.settings.toggles.showRowNumbers.description
+            }
             checked={settings.showRowNumbers}
             onChange={() =>
               updateSettings({
@@ -105,8 +123,10 @@ export function SettingsPage() {
           />
 
           <ToggleRow
-            title="Highlight active row"
-            description="Emphasize the current working row in knitting mode."
+            title={localization.settings.toggles.highlightActiveRow.title}
+            description={
+              localization.settings.toggles.highlightActiveRow.description
+            }
             checked={settings.highlightActiveRow}
             onChange={() =>
               updateSettings({
@@ -114,17 +134,52 @@ export function SettingsPage() {
               })
             }
           />
+      </div>
+    </div>
+
+      <div className="panel">
+        <div className="panel__header">
+          <span className="panel__title">
+            {localization.settings.languageTitle}
+          </span>
         </div>
+
+        <p className="form-field__hint">
+          {localization.settings.languageDescription}
+        </p>
+
+        <label className="form-field">
+          <span className="form-field__label">
+            {localization.settings.languageLabel}
+          </span>
+          <select
+            value={settings.language}
+            onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+              updateSettings({
+                language: event.target.value as Language,
+              })
+            }
+            className="select"
+          >
+            {languages.map((lang) => (
+              <option key={lang} value={lang}>
+                {localization.languageOptions[lang]}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       <div className="panel">
         <div className="panel__header">
-          <span className="panel__title">App data</span>
+          <span className="panel__title">
+            {localization.settings.appDataTitle}
+          </span>
         </div>
 
         <div className="stat-card" style={{ padding: "24px", background: "rgba(255,255,255,0.6)" }}>
           <p className="form-field__hint" style={{ marginBottom: "6px" }}>
-            Saved projects
+            {localization.settings.savedProjectsLabel}
           </p>
           <strong style={{ fontSize: "1.1rem" }}>{projectsCount}</strong>
         </div>
@@ -134,16 +189,18 @@ export function SettingsPage() {
           onClick={handleResetProjects}
           className="btn btn--destructive"
         >
-          Reset project data
+          {localization.buttons.resetProjects}
         </button>
       </div>
 
       <div className="panel">
         <div className="panel__header">
-          <span className="panel__title">About</span>
+          <span className="panel__title">
+            {localization.settings.aboutTitle}
+          </span>
         </div>
         <p className="form-field__hint">
-          Knit Grid is a personal knitting tracker for patterns, rows and project notes. This version is designed as a lightweight web app MVP.
+          {localization.settings.aboutDescription}
         </p>
       </div>
     </PageShell>

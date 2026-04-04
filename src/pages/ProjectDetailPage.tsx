@@ -3,11 +3,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { PageShell } from "../components/common/PageShell";
 import { EmptyState } from "../components/common/EmptyState";
 import { ProjectPreview } from "../components/projects/ProjectPreview";
+import { useLocalization } from "../localization/Localization";
 import { useAppStore } from "../app/store";
 
 export function ProjectDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const localization = useLocalization();
 
   const project = useAppStore((state) =>
     id ? state.getProjectById(id) : undefined
@@ -24,12 +26,12 @@ export function ProjectDetailPage() {
             onClick={() => navigate("/")}
             className="btn btn--ghost"
           >
-            ← Back
+            ← {localization.buttons.back}
           </button>
 
           <EmptyState
-            title="Project not found"
-            description="This project does not exist or has been deleted."
+            title={localization.projectDetail.notFoundTitle}
+            description={localization.projectDetail.notFoundDescription}
           />
         </div>
       </PageShell>
@@ -47,7 +49,7 @@ export function ProjectDetailPage() {
 
   function handleDelete() {
     const confirmed = window.confirm(
-      `Delete "${activeProject.name}"? This cannot be undone.`
+      localization.confirmations.deleteProject(activeProject.name)
     );
 
     if (!confirmed) return;
@@ -56,12 +58,7 @@ export function ProjectDetailPage() {
     navigate("/");
   }
 
-  const statusLabel =
-    activeProject.status === "not-started"
-      ? "Not started"
-      : activeProject.status === "in-progress"
-      ? "In progress"
-      : "Finished";
+  const statusLabel = localization.statuses[activeProject.status];
 
   return (
     <PageShell>
@@ -101,53 +98,71 @@ export function ProjectDetailPage() {
           </div>
 
           <p className="form-field__hint">
-            Keep all your project details and row progress in one place.
+            {localization.projectDetail.detailsHint}
           </p>
 
           <div className="stat-grid">
-            <StatCard label="Status" value={statusLabel} />
-            <StatCard label="Current row" value={`Row ${activeProject.currentRow}`} />
-            <StatCard label="Total rows" value={`${activeProject.totalRows}`} />
             <StatCard
-              label="Mode"
-              value={activeProject.knitMode === "round" ? "Round" : "Flat"}
+              label={localization.projectDetail.stats.status}
+              value={statusLabel}
+            />
+            <StatCard
+              label={localization.projectDetail.stats.currentRow}
+              value={localization.labels.rowNumber(activeProject.currentRow)}
+            />
+            <StatCard
+              label={localization.projectDetail.stats.totalRows}
+              value={localization.labels.rowsCount(activeProject.totalRows)}
+            />
+            <StatCard
+              label={localization.projectDetail.stats.mode}
+              value={
+                activeProject.knitMode === "round"
+                  ? localization.knitting.modeLabels.round
+                  : localization.knitting.modeLabels.flat
+              }
             />
           </div>
 
           <div className="page-actions">
-            <Link to={`/project/${activeProject.id}/knit`} className="btn btn--primary">
-              Open knitting mode
+            <Link
+              to={`/project/${activeProject.id}/knit`}
+              className="btn btn--primary"
+            >
+              {localization.buttons.openKnitMode}
             </Link>
             <Link
               to={`/project/${activeProject.id}/edit-pattern`}
               className="btn btn--secondary"
             >
-              Edit pattern
+              {localization.buttons.editPattern}
             </Link>
           </div>
         </div>
 
         <div className="panel">
           <div className="panel__header">
-            <span className="panel__title">Project details</span>
+            <span className="panel__title">
+              {localization.projectDetail.detailsTitle}
+            </span>
           </div>
 
           <Field
-            label="Yarn"
+            label={localization.projectDetail.fields.yarn}
             value={activeProject.yarn || ""}
             placeholder="e.g. Merino Wool, 4 ply"
             onChange={(value) => handleFieldChange("yarn", value)}
           />
 
           <Field
-            label="Needle size"
+            label={localization.projectDetail.fields.needleSize}
             value={activeProject.needleSize || ""}
             placeholder="e.g. 3.5 mm"
             onChange={(value) => handleFieldChange("needleSize", value)}
           />
 
           <TextAreaField
-            label="Notes"
+            label={localization.projectDetail.fields.notes}
             value={activeProject.notes || ""}
             placeholder="Write any project notes here"
             onChange={(value) => handleFieldChange("notes", value)}
@@ -156,11 +171,13 @@ export function ProjectDetailPage() {
 
         <div className="panel">
           <div className="panel__header">
-            <span className="panel__title">Danger zone</span>
+            <span className="panel__title">
+              {localization.projectDetail.dangerTitle}
+            </span>
           </div>
 
           <p className="form-field__hint">
-            Delete this project if you no longer need it.
+            {localization.projectDetail.dangerDescription}
           </p>
 
           <button
@@ -168,7 +185,7 @@ export function ProjectDetailPage() {
             onClick={handleDelete}
             className="btn btn--destructive"
           >
-            Delete project
+            {localization.buttons.deleteProject}
           </button>
         </div>
       </div>
