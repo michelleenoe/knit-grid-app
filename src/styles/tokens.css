@@ -1,0 +1,15 @@
+:root {
+  color-scheme: light;
+  --color-bg: #f2f0ec;
+  --color-surface: #ffffff;
+  --color-border: #e5dfd5;
+  --color-text: #1f1f1f;
+  --color-muted: #6b6b6b;
+  --color-accent: #de6b3e;
+  --color-accent-soft: rgba(222, 107, 62, 0.18);
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --shadow-soft: 0 10px 30px rgba(31, 31, 31, 0.12);
+  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --spacing-page: 1.5rem;
+}
