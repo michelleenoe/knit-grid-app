@@ -1,16 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { useLocalization } from "../../localization/Localization";
 import "./BottomNav.css";
 
-const navItems = [
-  { to: "/", label: "Projects" },
-  { to: "/library", label: "Library" },
-  { to: "/insights", label: "Insights" },
-  { to: "/settings", label: "Settings" },
-];
-
 export function BottomNav() {
+  const localization = useLocalization();
+  const navItems = [
+    { to: "/", label: localization.navigation.projects },
+    { to: "/library", label: localization.navigation.library },
+    { to: "/insights", label: localization.navigation.insights },
+    { to: "/settings", label: localization.navigation.settings },
+  ];
+
   return (
-    <nav className="bottom-nav">
+    <nav
+      className="bottom-nav"
+      aria-label={localization.navigation.ariaLabel}
+    >
       {navItems.map((item) => (
         <NavLink
           key={item.to}

@@ -45,6 +45,9 @@ type NewProjectStrings = {
     columns: string;
     knitMode: string;
   };
+  placeholders: {
+    name: string;
+  };
 };
 
 type ProjectDetailStrings = {
@@ -61,6 +64,12 @@ type ProjectDetailStrings = {
     mode: string;
   };
   fields: {
+    yarn: string;
+    needleSize: string;
+    notes: string;
+  };
+  placeholders: {
+    projectName: string;
     yarn: string;
     needleSize: string;
     notes: string;
@@ -101,6 +110,7 @@ type PatternEditorStrings = {
     erase: string;
   };
   selectColor: string;
+  cellLabel: (row: number, column: number) => string;
 };
 
 type InsightsStrings = {
@@ -161,6 +171,7 @@ type Localization = {
     cancel: string;
     openKnitMode: string;
     editPattern: string;
+    watch: string;
     startProject: string;
     applySize: string;
     previousRow: string;
@@ -175,6 +186,7 @@ type Localization = {
   };
   languageOptions: Record<Language, string>;
   labels: {
+    projectNameInput: string;
     rowNumber: (row: number) => string;
     rowsCount: (count: number) => string;
   };
@@ -184,6 +196,7 @@ type Localization = {
     library: string;
     insights: string;
     settings: string;
+    ariaLabel: string;
   };
 };
 
@@ -233,6 +246,9 @@ const localizations: Record<Language, Localization> = {
         columns: "Columns",
         knitMode: "Knit mode",
       },
+      placeholders: {
+        name: "e.g. Cozy pullover",
+      },
     },
     projectDetail: {
       notFoundTitle: "Project not found",
@@ -252,6 +268,12 @@ const localizations: Record<Language, Localization> = {
         yarn: "Yarn",
         needleSize: "Needle size",
         notes: "Notes",
+      },
+      placeholders: {
+        projectName: "Project name",
+        yarn: "e.g. Merino Wool, 4 ply",
+        needleSize: "e.g. 3.5 mm",
+        notes: "Write any project notes here",
       },
     },
     knitting: {
@@ -288,6 +310,7 @@ const localizations: Record<Language, Localization> = {
         erase: "Erase",
       },
       selectColor: "Select color",
+      cellLabel: (row, column) => `Cell ${row}-${column}`,
     },
     insights: {
       progressLabel: "PROGRESS",
@@ -339,6 +362,7 @@ const localizations: Record<Language, Localization> = {
       cancel: "Cancel",
       openKnitMode: "Open knitting mode",
       editPattern: "Edit pattern",
+      watch: "Watch",
       startProject: "Start a project",
       applySize: "Apply size",
       previousRow: "Previous",
@@ -362,6 +386,7 @@ const localizations: Record<Language, Localization> = {
       da: "Dansk",
     },
     labels: {
+      projectNameInput: "Project name",
       rowNumber: (row: number) => `Row ${row}`,
       rowsCount: (count: number) => `${count} rows`,
     },
@@ -371,6 +396,7 @@ const localizations: Record<Language, Localization> = {
       library: "Library",
       insights: "Insights",
       settings: "Settings",
+      ariaLabel: "Primary navigation",
     },
   },
   da: {
@@ -419,6 +445,9 @@ const localizations: Record<Language, Localization> = {
         columns: "Kolonner",
         knitMode: "Strikkemode",
       },
+      placeholders: {
+        name: "f.eks. Blød sweater",
+      },
     },
     projectDetail: {
       notFoundTitle: "Projekt ikke fundet",
@@ -438,6 +467,12 @@ const localizations: Record<Language, Localization> = {
         yarn: "Garn",
         needleSize: "Strikkepindestørrelse",
         notes: "Noter",
+      },
+      placeholders: {
+        projectName: "Projektnavn",
+        yarn: "f.eks. Merino Wool, 4 ply",
+        needleSize: "f.eks. 3,5 mm",
+        notes: "Skriv dine projektnoter her",
       },
     },
     knitting: {
@@ -474,6 +509,7 @@ const localizations: Record<Language, Localization> = {
         erase: "Slet",
       },
       selectColor: "Vælg farve",
+      cellLabel: (row, column) => `Celle ${row}-${column}`,
     },
     insights: {
       progressLabel: "FREMSKRIDT",
@@ -525,6 +561,7 @@ const localizations: Record<Language, Localization> = {
       cancel: "Annuller",
       openKnitMode: "Åbn strikketilstand",
       editPattern: "Rediger mønster",
+      watch: "Se",
       startProject: "Start et projekt",
       applySize: "Anvend størrelse",
       previousRow: "Forrige",
@@ -548,6 +585,7 @@ const localizations: Record<Language, Localization> = {
       da: "Dansk",
     },
     labels: {
+      projectNameInput: "Projektnavn",
       rowNumber: (row: number) => `Række ${row}`,
       rowsCount: (count: number) => `${count} rækker`,
     },
@@ -557,15 +595,16 @@ const localizations: Record<Language, Localization> = {
       library: "Bibliotek",
       insights: "Indsigt",
       settings: "Indstillinger",
+      ariaLabel: "Primær navigation",
     },
   },
 };
 
-export function getLocalization(lang: Language = "en"): Localization {
-  return localizations[lang] ?? localizations.en;
+export function getLocalization(lang: Language = "da"): Localization {
+  return localizations[lang] ?? localizations.da;
 }
 
 export function useLocalization() {
   const language = useAppStore((state) => state.settings.language);
-  return getLocalization(language ?? "en");
+  return getLocalization(language ?? "da");
 }

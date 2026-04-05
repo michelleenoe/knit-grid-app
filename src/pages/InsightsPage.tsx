@@ -114,7 +114,7 @@ export function InsightsPage() {
                   }}
                 >
                   <div
-                    title={`${value} rows`}
+                    title={localization.labels.rowsCount(value)}
                     className="weekly-chart__bar"
                     style={{
                       height,
@@ -182,7 +182,9 @@ export function InsightsPage() {
                     fontSize: "0.92rem",
                   }}
                 >
-                  Row {mostAdvancedProject.currentRow}
+                  {localization.labels.rowNumber(
+                    mostAdvancedProject.currentRow
+                  )}
                 </span>
               </div>
 

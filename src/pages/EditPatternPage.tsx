@@ -266,7 +266,10 @@ export function EditPatternPage() {
                       key={`${rowIndex}-${columnIndex}`}
                       type="button"
                       onClick={() => handleCellClick(rowIndex, columnIndex)}
-                      aria-label={`Cell ${rowIndex + 1}-${columnIndex + 1}`}
+                      aria-label={localization.patternEditor.cellLabel(
+                        rowIndex + 1,
+                        columnIndex + 1
+                      )}
                       style={{
                         width: "28px",
                         height: "28px",

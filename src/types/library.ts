@@ -4,11 +4,16 @@ export type LibraryCategory =
   | "patterns"
   | "saved";
 
+export type LocalizedField = {
+  en: string;
+  da: string;
+};
+
 export type LibraryItem = {
   id: string;
   category: LibraryCategory;
-  title: string;
-  subtitle: string;
-  description: string;
+  title: LocalizedField;
+  subtitle: LocalizedField;
+  description: LocalizedField;
   videoUrl?: string;
 };

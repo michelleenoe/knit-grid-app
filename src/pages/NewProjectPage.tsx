@@ -47,7 +47,7 @@ export function NewProjectPage() {
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="My sweater"
+              placeholder={localization.newProject.placeholders.name}
               className="input"
             />
             <span className="form-field__hint">{localization.newProject.hint}</span>

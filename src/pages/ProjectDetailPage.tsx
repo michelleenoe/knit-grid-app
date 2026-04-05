@@ -75,7 +75,7 @@ export function ProjectDetailPage() {
             onClick={() => navigate("/")}
             className="btn btn--ghost"
           >
-            ← Back
+            ← {localization.buttons.back}
           </button>
         </div>
 
@@ -88,12 +88,15 @@ export function ProjectDetailPage() {
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleFieldChange("name", event.target.value)
               }
-              aria-label="Project name"
+              aria-label={localization.labels.projectNameInput}
+              placeholder={localization.projectDetail.placeholders.projectName}
               className="project-title-input"
             />
             <div className="panel__meta">
               <span>{statusLabel}</span>
-              <span>Row {activeProject.currentRow}</span>
+              <span>
+                {localization.labels.rowNumber(activeProject.currentRow)}
+              </span>
             </div>
           </div>
 
@@ -150,21 +153,21 @@ export function ProjectDetailPage() {
           <Field
             label={localization.projectDetail.fields.yarn}
             value={activeProject.yarn || ""}
-            placeholder="e.g. Merino Wool, 4 ply"
+            placeholder={localization.projectDetail.placeholders.yarn}
             onChange={(value) => handleFieldChange("yarn", value)}
           />
 
           <Field
             label={localization.projectDetail.fields.needleSize}
             value={activeProject.needleSize || ""}
-            placeholder="e.g. 3.5 mm"
+            placeholder={localization.projectDetail.placeholders.needleSize}
             onChange={(value) => handleFieldChange("needleSize", value)}
           />
 
           <TextAreaField
             label={localization.projectDetail.fields.notes}
             value={activeProject.notes || ""}
-            placeholder="Write any project notes here"
+            placeholder={localization.projectDetail.placeholders.notes}
             onChange={(value) => handleFieldChange("notes", value)}
           />
         </div>
